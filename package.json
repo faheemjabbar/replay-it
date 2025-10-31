@@ -1,7 +1,7 @@
 {
   "name": "replayit",
   "version": "1.0.1",
-  "description": "Record and replay HTTP requests easily",
+  "description": "Record and replay HTTP requests with zero configuration",
   "type": "module",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -20,13 +20,26 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "http",
+    "replay",
+    "record",
+    "debug",
+    "middleware",
+    "express",
+    "testing",
+    "api",
+    "requests"
   ],
   "dependencies": {
     "axios": "^1.7.0",
     "chalk": "^5.3.0",
     "commander": "^12.0.0",
     "date-fns": "^3.6.0",
+    "express": "^5.1.0",
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
@@ -34,5 +47,10 @@
     "shx": "^0.4.0",
     "typescript": "^5.9.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/faheemjabbar/replayit.git"
+  },
+  "author": "Faheem Jabbar",
   "license": "MIT"
 }

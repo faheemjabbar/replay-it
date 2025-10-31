@@ -1,40 +1,49 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { loadRequests } from "../src/storage.js";
-import { replayRequests } from "../src/replayer.js"; // if you have replay logic exported
+import { replayRequests } from "../src/replayer.js";
+import { log } from "../src/logger.js";
 const program = new Command();
 program
     .name("replayit")
-    .description("Record and replay HTTP requests")
+    .description("📼 Record and replay HTTP requests")
     .version("1.0.1");
-// ✅ Replay command
+// ✅ Replay command - dead simple
 program
-    .command("replay <file>")
-    .requiredOption("--to <url>", "Target base URL")
-    .option("--delay <ms>", "Delay between requests (ms)", "0")
-    .option("--verbose", "Show detailed output")
-    .action(async (file, options) => {
+    .command("replay <file> <url>")
+    .description("Replay requests from a file to a target URL")
+    .action(async (file, url) => {
     try {
-        await replayRequests(file, options);
+        await replayRequests(file, url);
     }
     catch (err) {
-        console.error("Replay failed:", err.message);
+        log.error(err.message);
         process.exit(1);
     }
 });
-// ✅ List command
+// ✅ List command - see what's recorded
 program
     .command("list <file>")
-    .description("List recorded requests")
+    .description("List all recorded requests")
     .action(async (file) => {
     try {
         const requests = await loadRequests(file);
+        if (requests.length === 0) {
+            log.warn("No requests found");
+            return;
+        }
+        console.log(`\n📋 Found ${requests.length} requests:\n`);
         requests.forEach((req, i) => {
-            console.log(`${i + 1}. ${req.method} ${req.url} (${req.timestamp})`);
+            console.log(`  ${i + 1}. ${req.method} ${req.url}`);
+            console.log(`     ⏱️  ${req.timestamp}\n`);
         });
     }
     catch (err) {
-        console.error("Cannot load file:", err.message);
+        log.error(err.message);
     }
 });
 program.parse(process.argv);
+// Show help if no command provided
+if (!process.argv.slice(2).length) {
+    program.outputHelp();
+}

@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import { log } from "./logger";
+import { log } from "./logger.js";
 
 export const saveRequest = async (file: string, reqData: any) => {
   try {

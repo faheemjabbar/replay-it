@@ -1,11 +1,11 @@
 import axios from "axios";
-import { loadRequests } from "./storage";
-import { log } from "./logger";
+import { loadRequests } from "./storage.js";
+import { log } from "./logger.js";
 export async function replayRequests(file, baseUrl) {
     const requests = await loadRequests(file);
     if (!requests.length) {
         log.warn("No requests to replay.");
-        return;
+        return [];
     }
     log.info(`🔁 Replaying ${requests.length} requests to ${baseUrl}`);
     let success = 0;
