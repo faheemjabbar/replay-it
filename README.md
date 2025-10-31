@@ -97,7 +97,3 @@ app.use('/api', recordRequests({ file: 'api-requests.json' }));
 - `secret`
 - `apiKey`
 - `creditCard`
-
-## License
-
-MIT
